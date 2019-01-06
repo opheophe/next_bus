@@ -44,13 +44,16 @@ def fetch_api():
 	global time2time
 	global mylcd
 	global lastApiFetch
+	global num_fetch
 	fetching_active=True
+	num_fetch=num_fetch+1
 	
 	try:
 		sleep(1)
 		#Initialize LCD
 		mylcd.lcd_clear()
-		mylcd.lcd_display_string("Fetching data")
+		mylcd.lcd_display_string("Fetching data",1)
+		mylcd.lcd_display_string("#"+str(num_fetch),2)
 		lastApiFetch=datetime.datetime.now()
 		response = requests.get("http://api.sl.se/api2/realtimedeparturesv4.json?&key="+apiKey+"&maxJourneys=2&Bus=true&Metro=false&Train=false&Tram=false&Ship=false&TimeWindow=60&siteid=1981&Format=xml")
 		data = response.json()
@@ -146,6 +149,7 @@ try:
 	GPIO.setup(11, GPIO.OUT)
 	GPIO.output(11,GPIO.HIGH)
 	
+	num_fetch=0;
 	
 	#Setup Callbacks
 	GPIO.setup(13, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
