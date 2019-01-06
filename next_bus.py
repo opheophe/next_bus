@@ -7,10 +7,10 @@ import datetime
 from datetime import timedelta
 from time import *
 import json
-import requests
 import threading
 import api_key
 from threading import *
+import requests
 
 #Set API key from TRAFIKLAB
 apiKey=api_key.api_key
@@ -55,11 +55,9 @@ def fetch_api():
 		print("Something failed when fetching data")
 		dest1="N/A"
 		line1="N/A"
-		#time1=datetime.datetime.now()
 		time1time=datetime.datetime.now()
 		dest2="N/A"
 		line2="N/A"
-		#time2=datetime.datetime.now()
 		time2time=datetime.datetime.now()
 	sleep(1)
 	fetching_active=False
@@ -102,13 +100,16 @@ def update_time():
 		mylcd.lcd_display_string(diff2str,2,8)
 
 def callback_light(channel):
+	global t
 	if GPIO.input(13) == GPIO.HIGH:
 		#if GPIO.input(11)==1:
 		#	GPIO.output(11,GPIO.LOW)
 		#else:
 		#	GPIO.output(11,GPIO.HIGH)
 		GPIO.output(11,GPIO.HIGH)
-		Timer(30.0, display_off).start()
+		t.cancel()
+		t=Timer(30.0, display_off)
+		t.start()
 	else:
 		# Button goes back up
 		True
@@ -144,21 +145,22 @@ try:
 	
 	fetching_active=False
 	GPIO.output(11,GPIO.HIGH)
-	Timer(30.0, display_off).start()
+	t=Timer(30.0, display_off)
+	t.start()
 	print("initial fetch")
 	fetch_api()
 	#test
 	while True:
 		time_passed_since_last_fetch=(datetime.datetime.now()-lastApiFetch).total_seconds()
-		#If time1 is passed
+		# If 60 sec past diff1 or diff2
+		# If 30 min have passed with no fetch
 		if diff1.total_seconds()<-60:
 			fetch_api()
-			print("fetch due to diff1")
-		if diff2.total_seconds()<-60:
+			print(str(datetime.datetime.now())+" : Fetch due to diff1")
+		elif diff2.total_seconds()<-60:
 			fetch_api()
-			print("fetch due to diff2")
-		#Every 30 minutes
-		if time_passed_since_last_fetch>(30*60):
+			print(str(datetime.datetime.now())+" : Fetch due to diff2")
+		elif time_passed_since_last_fetch>(30*60):
 			fetch_api()
 		sleep(0.2)
 		update_time()
