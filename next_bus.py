@@ -15,6 +15,19 @@ import requests
 #Set API key from TRAFIKLAB
 apiKey=api_key.api_key
 
+import socket
+def get_ip():
+	s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+	try:
+		# doesn't even have to be reachable
+		s.connect(('10.255.255.255', 1))
+		IP = s.getsockname()[0]
+	except:
+		IP = '127.0.0.1'
+	finally:
+		s.close()
+	return IP
+
 def display_off():
     GPIO.output(11,GPIO.LOW)
 
@@ -126,7 +139,7 @@ try:
 	#Setup pins
 	GPIO.setmode(GPIO.BOARD)
 	GPIO.setup(11, GPIO.OUT)
-	GPIO.output(11,GPIO.LOW)
+	GPIO.output(11,GPIO.HIGH)
 	
 	
 	#Setup Callbacks
@@ -137,6 +150,10 @@ try:
 	
 	#Initialize LCD
 	mylcd = i2c_lcd_driver.lcd()
+	mylcd.lcd_display_string(get_ip())
+	sleep(3)
+	mylcd.lcd_clear()
+	
 	lastApiFetch=datetime.datetime.now()
 	time1time=datetime.datetime.now()
 	time2time=datetime.datetime.now()
@@ -144,7 +161,6 @@ try:
 	diff2=time2time-lastApiFetch
 	
 	fetching_active=False
-	GPIO.output(11,GPIO.HIGH)
 	t=Timer(30.0, display_off)
 	t.start()
 	print("initial fetch")
