@@ -47,6 +47,9 @@ def fetch_api():
 	fetching_active=True
 	
 	try:
+		sleep(1)
+		#Initialize LCD
+		mylcd.lcd_display_string("Fetching data")
 		lastApiFetch=datetime.datetime.now()
 		response = requests.get("http://api.sl.se/api2/realtimedeparturesv4.json?&key="+apiKey+"&maxJourneys=2&Bus=true&Metro=false&Train=false&Tram=false&Ship=false&TimeWindow=60&siteid=1981&Format=xml")
 		data = response.json()
@@ -54,7 +57,7 @@ def fetch_api():
 		line1=data['ResponseData']['Buses'][0]['LineNumber'].encode('ascii','replace')
 		time1=data['ResponseData']['Buses'][0]['ExpectedDateTime']
 		time1time=datetime.datetime.strptime(time1, '%Y-%m-%dT%H:%M:%S')
-		#Fulfix för att testa
+		#Fiktiv variabelsättning för att testa
 		#time1time=datetime.datetime.now()+timedelta(seconds=5)
 		
 		dest2=data['ResponseData']['Buses'][1]['Destination'].encode('ascii','replace')
@@ -63,7 +66,8 @@ def fetch_api():
 		time2time=datetime.datetime.strptime(time2, '%Y-%m-%dT%H:%M:%S')
 		dest1=dest1.replace('?lvsj?','Alvsja').replace('H?gdalen','Hogdalen')
 		dest2=dest2.replace('?lvsj?','Alvsja').replace('H?gdalen','Hogdalen')
-
+		sleep(1)
+		mylcd.lcd_clear()
 	except:
 		print("Something failed when fetching data")
 		dest1="N/A"
