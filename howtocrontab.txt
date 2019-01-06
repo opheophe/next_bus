@@ -1,0 +1,6 @@
+cronttab -e
+@reboot python /home/pi/next_bus/next_bus.py >> /home/pi/next_bus/log.text
+
+
+ps aux | grep /home/pi/next_bus/next_bus.py 
+sudo kill pid
