@@ -1,7 +1,9 @@
+git clone https...
+
 git status
 git add --all
 git commit -m "Message"
 git push
 
-
+# Save credentials
 git config credential.helper store
