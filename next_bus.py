@@ -53,14 +53,14 @@ def fetch_api():
 
 	except:
 		print("Something failed when fetching data")
-		dest1="Dunno"
+		dest1="N/A"
 		line1="N/A"
-		time1=datetime.datetime.now()
-		time1time=datetime.datetime.strptime(time1, '%Y-%m-%dT%H:%M:%S')
-		dest2="Dunno"
+		#time1=datetime.datetime.now()
+		time1time=datetime.datetime.now()
+		dest2="N/A"
 		line2="N/A"
-		time2=datetime.datetime.now()
-		time2time=datetime.datetime.strptime(time2, '%Y-%m-%dT%H:%M:%S')
+		#time2=datetime.datetime.now()
+		time2time=datetime.datetime.now()
 	sleep(1)
 	fetching_active=False
 
