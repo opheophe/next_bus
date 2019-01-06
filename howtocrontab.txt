@@ -1,6 +1,7 @@
 cronttab -e
 @reboot python /home/pi/next_bus/next_bus.py >> /home/pi/next_bus/log.text
 
+OBS: Print till log sker endast då programmet avslutats; ej under körning
 
 ps aux | grep /home/pi/next_bus/next_bus.py 
 sudo kill pid
