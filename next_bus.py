@@ -49,6 +49,7 @@ def fetch_api():
 	try:
 		sleep(1)
 		#Initialize LCD
+		mylcd.lcd_clear()
 		mylcd.lcd_display_string("Fetching data")
 		lastApiFetch=datetime.datetime.now()
 		response = requests.get("http://api.sl.se/api2/realtimedeparturesv4.json?&key="+apiKey+"&maxJourneys=2&Bus=true&Metro=false&Train=false&Tram=false&Ship=false&TimeWindow=60&siteid=1981&Format=xml")

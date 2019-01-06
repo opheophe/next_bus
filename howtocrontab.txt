@@ -1,6 +1,8 @@
 cronttab -e
 @reboot python /home/pi/next_bus/next_bus.py >> /home/pi/next_bus/log.text
 
+OBS: Provar att köra utan log då den verkar sabba git
+
 OBS: Print till log sker endast då programmet avslutats; ej under körning
 
 ps aux | grep /home/pi/next_bus/next_bus.py 

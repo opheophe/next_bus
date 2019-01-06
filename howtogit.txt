@@ -7,3 +7,8 @@ git push
 
 # Save credentials
 git config credential.helper store
+
+
+find .git/objects/ -size 0 -exec rm -f {} \;
+git init
+git fetch
