@@ -129,7 +129,7 @@ def callback_light(channel):
 		#	GPIO.output(11,GPIO.HIGH)
 		GPIO.output(11,GPIO.HIGH)
 		t.cancel()
-		t=Timer(30.0, display_off)
+		t=Timer(300.0, display_off)
 		t.start()
 	else:
 		# Button goes back up
@@ -139,6 +139,10 @@ def callback_api(channel):
 	if GPIO.input(15) == GPIO.HIGH:
 		fetch_api()
 		print("fetch due to button")	
+		GPIO.output(11,GPIO.HIGH)
+		t.cancel()
+		t=Timer(300.0, display_off)
+		t.start()
 	else:
 		# Button goes back up
 		True
@@ -170,7 +174,7 @@ try:
 	diff2=time2time-lastApiFetch
 	
 	fetching_active=False
-	t=Timer(30.0, display_off)
+	t=Timer(300.0, display_off)
 	t.start()
 	print("initial fetch")
 	fetch_api()
