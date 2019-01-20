@@ -136,6 +136,7 @@ def callback_light(channel):
 		True
 
 def callback_api(channel):
+	global t
 	if GPIO.input(15) == GPIO.HIGH:
 		fetch_api()
 		print("fetch due to button")	
